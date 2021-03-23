@@ -24,8 +24,11 @@ int main(int argc, char *argv[])
 		strcpy(searchstring, argv[1]); //   that is the search string
 	else							   // otherwise
 		searchstring[0] = 0;		   //   search string is empty
-
+#if defined(_WIN32) || defined(_WIN64)
+	userid = getcwd();
+#else
 	userid = getuid();
+#endif
 	fd = open(FILENAME, O_RDONLY); // open the file for read-only access
 	if (fd == -1)
 		fatal("in main() while opening file for reading");
